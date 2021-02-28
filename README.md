@@ -8,7 +8,7 @@
 
 ### Test Certificates
 
-- located in 'certs/'
+- located in `certs/`
 - all CA certs have a password of `password`
 
 ### Create a new CA
