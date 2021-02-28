@@ -6,6 +6,7 @@ import { validate } from './middleware/validate'
 import { createServer } from './server'
 import { DoorEvent } from './door-event'
 import { TLSSocket } from 'node:tls'
+import { writer } from './middleware/writer'
 
 declare global {
   namespace Express {
@@ -22,10 +23,11 @@ app.use(bodyParser.json())
 app.use(authentication())
 
 const processEvent = (req: Request, res: Response) => {
+  const event: DoorEvent = req.body
   return res.json('')
 }
 
-app.post('/event', validate, authorize, processEvent)
+app.post('/event', validate, authorize, writer, processEvent)
 
 const server = createServer(app)
 

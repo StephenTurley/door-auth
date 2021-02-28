@@ -1,14 +1,15 @@
 import https from 'https'
 import fs from 'fs'
+import Config from './config'
 
 import { RequestListener } from 'node:http'
 
 const createServer = (app: RequestListener) => {
   return https.createServer(
     {
-      cert: fs.readFileSync('certs/server-crt.pem'),
-      key: fs.readFileSync('certs/server-key.pem'),
-      ca: fs.readFileSync('certs/ca-cert.pem'),
+      cert: fs.readFileSync(Config.cert),
+      key: fs.readFileSync(Config.key),
+      ca: fs.readFileSync(Config.ca),
       requestCert: true,
       rejectUnauthorized: false
     },

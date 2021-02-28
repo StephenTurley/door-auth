@@ -9,8 +9,6 @@ describe('heartbeat', () => {
           expect(res.body).toEqual('')
         })
     })
-
-    it('should write the heartbeat', () => {})
   })
 
   describe('validation', () => {
@@ -37,8 +35,8 @@ describe('heartbeat', () => {
   })
 
   describe('authorization', () => {
-    it('returns error when message id does not match cert', () => {
-      return postEvent({ event: 'heartbeat', id: 'NotTheCorrectDoor' }, 'door1')
+    it('returns Forbidden when sending an ID for another door', () => {
+      return postEvent({ event: 'heartbeat', id: 'NotDoor1' }, 'door1')
         .expect(403)
         .expect((res) => {
           expect(res.body.error).toEqual('Id does not match certificate')
