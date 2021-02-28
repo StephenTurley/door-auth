@@ -35,13 +35,14 @@ describe('heartbeat', () => {
         })
     })
   })
+
   describe('authorization', () => {
-    // it('returns error when message id does not match cert', () => {
-    //   return postEvent({ event: 'heartbeat', id: 'NotTheCorrectDoor' }, 'door1')
-    //     .expect(403)
-    //     .expect((res) => {
-    //       expect(res.body.error).toEqual('Id does not match certificate')
-    //     })
-    // })
+    it('returns error when message id does not match cert', () => {
+      return postEvent({ event: 'heartbeat', id: 'NotTheCorrectDoor' }, 'door1')
+        .expect(403)
+        .expect((res) => {
+          expect(res.body.error).toEqual('Id does not match certificate')
+        })
+    })
   })
 })
