@@ -39,7 +39,7 @@ describe('heartbeat', () => {
       return postEvent({ event: 'heartbeat', id: 'NotDoor1' }, 'door1')
         .expect(403)
         .expect((res) => {
-          expect(res.body.error).toEqual('Id does not match certificate')
+          expect(res.body.error).toEqual('Forbidden')
         })
     })
   })
