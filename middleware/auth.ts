@@ -1,9 +1,8 @@
 import express, { NextFunction } from 'express'
 import https from 'https'
+import { DoorEvent } from '../door-event'
 
 import { TLSSocket } from 'node:tls'
-
-type DoorEvent = { id: string; event: 'heartbeat' | 'open' | 'close' }
 
 declare global {
   namespace Express {
