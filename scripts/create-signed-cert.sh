@@ -22,5 +22,5 @@ openssl req -new -key "$cert-key.pem" -out "$cert-csr.pem"
 echo "signing cert"
 openssl x509 -req -days 9999 -in "$cert-csr.pem" -CA "$ca-crt.pem" -CAkey "$ca-key.pem" -CAcreateserial -out "$cert-crt.pem"
 
-echo "verifing cert"
+echo "verifying cert"
 openssl verify -CAfile "$ca-crt.pem" "$cert-crt.pem"
