@@ -3,7 +3,7 @@ import fs from 'fs'
 import request from 'supertest'
 import { DoorEvent } from '../door-event'
 
-export function postEvent(event: DoorEvent, door?: string) {
+export function postEvent(event: any, door?: string) {
   const req = request(server)
     .post('/event')
     .trustLocalhost()

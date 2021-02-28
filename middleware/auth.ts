@@ -13,7 +13,7 @@ declare global {
   }
 }
 
-const tlsAuthentication = () => (
+const authentication = () => (
   req: Express.Request,
   res: express.Response,
   next: NextFunction
@@ -28,4 +28,4 @@ const tlsAuthentication = () => (
   }
 }
 
-export { tlsAuthentication }
+export { authentication }
