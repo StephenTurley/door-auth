@@ -11,7 +11,7 @@ app.use(bodyParser.json())
 app.use(authentication())
 
 const processEvent = (req: Request<DoorEvent>, res: Response) => {
-  return res.json('hello')
+  return res.json()
 }
 
 app.post(

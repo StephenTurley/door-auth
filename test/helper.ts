@@ -18,3 +18,12 @@ export function postEvent(event: any, door?: string) {
   }
   return req
 }
+
+export function validationError(field: string, value: any) {
+  return {
+    location: 'body',
+    msg: 'Invalid value',
+    param: field,
+    value: value
+  }
+}
