@@ -2,7 +2,7 @@ import express, { NextFunction } from 'express'
 import https from 'https'
 import { DoorEvent } from '../door-event'
 
-const authentication = () => (
+const authentication = (
   req: Express.Request,
   res: express.Response,
   next: NextFunction

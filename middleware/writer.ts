@@ -6,13 +6,16 @@ import fs from 'fs'
 export type Message = { timestamp: Date; status: Status; event: DoorEvent }
 export type MessageEmitter = (message: Message) => void
 
+const error = (res: Response) =>
+  res.status(502).json({ error: 'failed to write' })
+
 export const writer = (emitter: MessageEmitter) => (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   if (Config.faultInjection && Math.random() <= 0.1) {
-    return res.status(500).json({ error: 'failed to write' })
+    return error(res)
   }
   try {
     const event: DoorEvent = req.body
@@ -20,6 +23,6 @@ export const writer = (emitter: MessageEmitter) => (
     emitter(msg)
     next()
   } catch (err) {
-    return res.status(500).json({ error: 'failed to write' })
+    return error(res)
   }
 }
