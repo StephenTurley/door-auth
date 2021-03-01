@@ -27,9 +27,9 @@ app.use(authentication())
 const processEvent = (req: Request, res: Response) => {
   const event: DoorEvent = req.body
   if (req.status === 'rejected') {
-    return res.status(403).json({ error: 'Forbidden' })
+    return res.status(403).json({ status: req.status })
   }
-  return res.json('')
+  return res.json({ status: req.status })
 }
 
 app.post('/event', validate, authorize, writer, processEvent)

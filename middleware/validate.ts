@@ -3,7 +3,10 @@ import { body, check, validationResult } from 'express-validator'
 
 export const validate = [
   body('id').isLength({ min: 1 }),
-  body('event').matches(/^heartbeat$/),
+  body('event').matches(/^heartbeat$|^enter$/),
+  body('payload.employeeId')
+    .if(body('event').equals('enter'))
+    .isInt({ min: 0 }),
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {

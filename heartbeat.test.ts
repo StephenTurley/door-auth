@@ -6,7 +6,7 @@ describe('heartbeat', () => {
       return postEvent({ event: 'heartbeat', id: 'door1.localhost' }, 'door1')
         .expect(200)
         .expect((res) => {
-          expect(res.body).toEqual('')
+          expect(res.body).toEqual({ status: 'allowed' })
         })
     })
   })
@@ -39,7 +39,7 @@ describe('heartbeat', () => {
       return postEvent({ event: 'heartbeat', id: 'NotDoor1' }, 'door1')
         .expect(403)
         .expect((res) => {
-          expect(res.body.error).toEqual('Forbidden')
+          expect(res.body).toEqual({ status: 'rejected' })
         })
     })
   })
