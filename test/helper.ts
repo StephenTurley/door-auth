@@ -3,9 +3,21 @@ import fs from 'fs'
 import request from 'supertest'
 import { DoorEvent } from '../door-event'
 import { MessageEmitter } from '../middleware/writer'
+import EmployeeRepository, { InMemoryDb } from '../employee-repository'
 
-export function postEvent(event: any, door?: string, emitter?: MessageEmitter) {
-  const req = request(createServer(emitter))
+const testDb = () => {
+  const db = new InMemoryDb()
+  db.setEmployee({ id: 1, policies: [{ id: 'door1' }] })
+  return db
+}
+
+export function postEvent(
+  event: any,
+  door?: string,
+  emitter?: MessageEmitter,
+  db: EmployeeRepository = testDb()
+) {
+  const req = request(createServer(emitter, db))
     .post('/event')
     .trustLocalhost()
     .set('Accept', 'application/json')

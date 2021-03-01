@@ -11,6 +11,8 @@ import { TLSSocket } from 'node:tls'
 import { handleResponse } from './middleware/handler'
 import { withHttps } from './https'
 
+import EmployeeRepository, { InMemoryDb } from './employee-repository'
+
 declare global {
   type Status = 'rejected' | 'allowed'
   namespace Express {
@@ -25,7 +27,10 @@ declare global {
 const messageLogger: MessageEmitter = (msg: Message) =>
   fs.appendFileSync(Config.writePath, JSON.stringify(msg) + '\n')
 
-const createServer = (messageEmitter: MessageEmitter = messageLogger) => {
+const createServer = (
+  messageEmitter: MessageEmitter = messageLogger,
+  db: EmployeeRepository = new InMemoryDb()
+) => {
   const app = express()
   app.use(bodyParser.json())
   app.use(authentication)
@@ -33,7 +38,7 @@ const createServer = (messageEmitter: MessageEmitter = messageLogger) => {
   app.post(
     '/event',
     validate,
-    authorize,
+    authorize(db),
     writer(messageEmitter),
     handleResponse
   )

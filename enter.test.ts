@@ -1,4 +1,5 @@
 import { Enter } from './door-event'
+import { InMemoryDb } from './employee-repository'
 import { Message, MessageEmitter } from './middleware/writer'
 import { validationError, postEvent } from './test/helper'
 
@@ -75,6 +76,38 @@ describe('enter', () => {
           expect(res.body.errors).toEqual([
             validationError('payload.employeeId', -1)
           ])
+        })
+    })
+  })
+
+  describe('authorization', () => {
+    it('returns Forbidden when sending an ID for another door', () => {
+      const event = { event: 'enter', id: 'door22', payload: { employeeId: 1 } }
+      return postEvent(event, 'door1')
+        .expect(403)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 'rejected' })
+        })
+    })
+
+    it('returns Forbidden when employee is not in db', () => {
+      const event = { event: 'enter', id: 'door1', payload: { employeeId: 99 } }
+      return postEvent(event, 'door1')
+        .expect(403)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 'rejected' })
+        })
+    })
+
+    it('returns Forbidden when does not have access to the door', () => {
+      const db: InMemoryDb = new InMemoryDb()
+      db.setEmployee({ id: 99, policies: [{ id: 'door2' }] })
+
+      const event = { event: 'enter', id: 'door1', payload: { employeeId: 99 } }
+      return postEvent(event, 'door1', jest.fn(), db)
+        .expect(403)
+        .expect((res) => {
+          expect(res.body).toEqual({ status: 'rejected' })
         })
     })
   })
