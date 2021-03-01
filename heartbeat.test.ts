@@ -4,7 +4,7 @@ import { validationError, postEvent } from './test/helper'
 
 describe('heartbeat', () => {
   describe('happy path', () => {
-    const event: Heartbeat = { event: 'heartbeat', id: 'door1.localhost' }
+    const event: Heartbeat = { event: 'heartbeat', id: 'door1' }
     it('should accept heartbeats', () => {
       return postEvent(event, 'door1')
         .expect(200)
@@ -37,10 +37,7 @@ describe('heartbeat', () => {
     })
 
     it('must valid event type', () => {
-      return postEvent(
-        { event: 'not a heartbeat', id: 'door1.localhost' },
-        'door1'
-      )
+      return postEvent({ event: 'not a heartbeat', id: 'door1' }, 'door1')
         .expect(400)
         .expect((res) => {
           expect(res.body.errors).toEqual([

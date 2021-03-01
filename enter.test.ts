@@ -6,7 +6,7 @@ describe('enter', () => {
   describe('happy path', () => {
     const event: Enter = {
       event: 'enter',
-      id: 'door1.localhost',
+      id: 'door1',
       payload: { employeeId: 1 }
     }
 
@@ -51,7 +51,7 @@ describe('enter', () => {
     it('must valid event type', () => {
       const event = {
         event: 'not an enter',
-        id: 'door1.localhost',
+        id: 'door1',
         payload: { employeeId: 1 }
       }
       return postEvent(event, 'door1')
@@ -66,7 +66,7 @@ describe('enter', () => {
     it('must have valid employeeId', () => {
       const event = {
         event: 'enter',
-        id: 'door1.localhost',
+        id: 'door1',
         payload: { employeeId: -1 }
       }
       return postEvent(event, 'door1')
