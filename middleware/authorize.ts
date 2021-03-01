@@ -15,12 +15,10 @@ export const authorize = (db: EmployeeRepository) => (
   const event: DoorEvent = req.body
   if (req?.body?.id !== req.client.getPeerCertificate().subject.CN) {
     req.status = 'rejected'
-    next()
   } else if (event.event === 'enter' || event.event === 'exit') {
     req.status = isAllowed(event, db) ? 'allowed' : 'rejected'
-    next()
   } else {
     req.status = 'allowed'
-    next()
   }
+  next()
 }
