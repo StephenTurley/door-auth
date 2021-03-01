@@ -1,9 +1,9 @@
 import EmployeeRepository from '../employee-repository'
 import { NextFunction, Response, Request } from 'express'
-import { DoorEvent, Enter } from '../door-event'
+import { DoorEvent, Enter, Exit } from '../door-event'
 import * as _ from 'lodash'
 
-const isAllowed = (event: Enter, db: EmployeeRepository): boolean => {
+const isAllowed = (event: Enter | Exit, db: EmployeeRepository): boolean => {
   return !!_.find(db.getPolicies(event.payload.employeeId), { id: event.id })
 }
 
@@ -16,7 +16,7 @@ export const authorize = (db: EmployeeRepository) => (
   if (req?.body?.id !== req.client.getPeerCertificate().subject.CN) {
     req.status = 'rejected'
     next()
-  } else if (event.event === 'enter') {
+  } else if (event.event === 'enter' || event.event === 'exit') {
     req.status = isAllowed(event, db) ? 'allowed' : 'rejected'
     next()
   } else {

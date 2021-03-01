@@ -4,6 +4,10 @@ export type Enter = {
   id: string
   payload: { employeeId: number }
 }
-export type Exit = { event: 'exit'; id: string }
+export type Exit = {
+  event: 'exit'
+  id: string
+  payload: { employeeId: number }
+}
 
 export type DoorEvent = Heartbeat | Enter | Exit

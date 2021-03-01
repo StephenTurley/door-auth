@@ -3,7 +3,8 @@ import { body, check, validationResult } from 'express-validator'
 
 export const validate = [
   body('id').isLength({ min: 1 }),
-  body('event').matches(/^heartbeat$|^enter$/),
+  body('event').matches(/^heartbeat$|^enter$|^exit$/),
+  body('payload.employeeId').if(body('event').equals('exit')).isInt({ min: 0 }),
   body('payload.employeeId')
     .if(body('event').equals('enter'))
     .isInt({ min: 0 }),
