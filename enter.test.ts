@@ -1,4 +1,5 @@
 import { Enter } from './door-event'
+import { Message, MessageEmitter } from './middleware/writer'
 import { validationError, postEvent } from './test/helper'
 
 describe('enter', () => {
@@ -15,6 +16,20 @@ describe('enter', () => {
         .expect((res) => {
           expect(res.body).toEqual({ status: 'allowed' })
         })
+    })
+
+    it('logs a message', (done) => {
+      const emitter: MessageEmitter = jest.fn()
+
+      postEvent(event, 'door1', emitter).end(() => {
+        const expected: Message = {
+          timestamp: expect.any(Date),
+          status: 'allowed',
+          event: event
+        }
+        expect(emitter).toHaveBeenCalledWith(expected)
+        done()
+      })
     })
   })
 

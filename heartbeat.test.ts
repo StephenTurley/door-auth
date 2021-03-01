@@ -1,13 +1,29 @@
+import { Heartbeat } from './door-event'
+import { Message, MessageEmitter } from './middleware/writer'
 import { validationError, postEvent } from './test/helper'
 
 describe('heartbeat', () => {
   describe('happy path', () => {
+    const event: Heartbeat = { event: 'heartbeat', id: 'door1.localhost' }
     it('should accept heartbeats', () => {
-      return postEvent({ event: 'heartbeat', id: 'door1.localhost' }, 'door1')
+      return postEvent(event, 'door1')
         .expect(200)
         .expect((res) => {
           expect(res.body).toEqual({ status: 'allowed' })
         })
+    })
+
+    it('logs a message', (done) => {
+      const emitter: MessageEmitter = jest.fn()
+      const expected: Message = {
+        timestamp: expect.any(Date),
+        status: 'allowed',
+        event: event
+      }
+      postEvent(event, 'door1', emitter).end(() => {
+        expect(emitter).toHaveBeenCalledWith(expected)
+        done()
+      })
     })
   })
 

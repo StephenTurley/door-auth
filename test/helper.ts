@@ -1,10 +1,11 @@
-import server from '../app'
+import createServer from '../app'
 import fs from 'fs'
 import request from 'supertest'
 import { DoorEvent } from '../door-event'
+import { MessageEmitter } from '../middleware/writer'
 
-export function postEvent(event: any, door?: string) {
-  const req = request(server)
+export function postEvent(event: any, door?: string, emitter?: MessageEmitter) {
+  const req = request(createServer(emitter))
     .post('/event')
     .trustLocalhost()
     .set('Accept', 'application/json')
