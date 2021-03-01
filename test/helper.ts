@@ -1,7 +1,6 @@
 import createServer from '../app'
 import fs from 'fs'
 import request from 'supertest'
-import { DoorEvent } from '../door-event'
 import { MessageEmitter } from '../middleware/writer'
 import EmployeeRepository, { InMemoryDb } from '../employee-repository'
 

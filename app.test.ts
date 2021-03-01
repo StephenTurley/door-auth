@@ -1,4 +1,4 @@
-import { validationError, postEvent } from './test/helper'
+import { postEvent } from './test/helper'
 
 describe('app', () => {
   describe('authentication', () => {

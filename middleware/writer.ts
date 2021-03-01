@@ -1,7 +1,6 @@
 import { DoorEvent } from '../door-event'
 import { Request, Response, NextFunction } from 'express'
 import Config from '../config'
-import fs from 'fs'
 
 export type Message = { timestamp: Date; status: Status; event: DoorEvent }
 export type MessageEmitter = (message: Message) => void

@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from 'express'
-import { body, check, validationResult } from 'express-validator'
+import { body, validationResult } from 'express-validator'
 
 export const validate = [
   body('id').isLength({ min: 1 }),

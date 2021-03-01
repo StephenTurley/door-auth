@@ -1,5 +1,4 @@
-import { DoorEvent } from '../door-event'
-import express, { NextFunction, Response, Request } from 'express'
+import { Response, Request } from 'express'
 
 export const handleResponse = (req: Request, res: Response) => {
   if (req.status === 'rejected') {

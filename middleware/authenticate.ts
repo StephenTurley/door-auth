@@ -1,6 +1,4 @@
 import express, { NextFunction } from 'express'
-import https from 'https'
-import { DoorEvent } from '../door-event'
 
 const authentication = (
   req: Express.Request,
