@@ -5,12 +5,11 @@ import Config from './config'
 import { authentication } from './middleware/authenticate'
 import { authorize } from './middleware/authorize'
 import { validate } from './middleware/validate'
+import { handleResponse } from './middleware/handler'
 import { Message, MessageEmitter, writer } from './middleware/writer'
 import { DoorEvent } from './door-event'
 import { TLSSocket } from 'node:tls'
-import { handleResponse } from './middleware/handler'
 import { withHttps } from './https'
-
 import EmployeeRepository, { InMemoryDb } from './employee-repository'
 
 declare global {

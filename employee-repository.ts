@@ -8,6 +8,7 @@ export default interface EmployeeRepository {
 
 export class InMemoryDb implements EmployeeRepository {
   constructor(private db: Record<number, DoorPolicy[]> = {}) {}
+
   getPolicies(id: number): DoorPolicy[] {
     return this.db[id] || []
   }

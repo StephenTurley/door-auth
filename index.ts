@@ -1,7 +1,7 @@
-import server from './app'
+import createServer from './app'
 
 const PORT = 8443
 
-server().listen(PORT, () => {
+createServer().listen(PORT, () => {
   console.log(`Server is running at https://localhost:${PORT}`)
 })
